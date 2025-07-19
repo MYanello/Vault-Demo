@@ -24,14 +24,25 @@ kubectl exec "$(kubectl get pod -l app=curl -n client -o jsonpath={.items..metad
 Now setup Istio to check the JWT before allowing the request:
 ```
 kubectl apply -f auth.yaml -n backend
+```
+```
 kubectl rollout restart -n backend deploy httpbin
-kubectl exec "$(kubectl get pod -l app=curl -n client -o jsonpath={.items..metadata.name})" -c curl -n client -- curl "http://httpbin.backend:8000/headers" -sS  -H "Authorization: Bearer aW52YWxpZAo.YmFkCg.bm9idWVubwo="
+```
+```
+kubectl exec "$(kubectl get pod -l app=curl -n client -o jsonpath={.items..metadata.name})" -c curl -n client -- curl "http://httpbin.backend:8000/headers" -sS
 ```
 
 Let's get a JWT so we can access our service!
 ```
 export ADMIN_TOKEN=$(python jwt-issue.py --is-admin)
+```
+```
 kubectl exec "$(kubectl get pod -l app=curl -n client -o jsonpath={.items..metadata.name})" -c curl -n client -- curl "http://httpbin.backend:8000/headers" -sS  -H "Authorization: Bearer $ADMIN_TOKEN"
+```
+```
 export USER_TOKEN=$(python jwt-issue.py)
+```
+```
 kubectl exec "$(kubectl get pod -l app=curl -n client -o jsonpath={.items..metadata.name})" -c curl -n client -- curl "http://httpbin.backend:8000/headers" -sS  -H "Authorization: Bearer $USER_TOKEN"
 ```
+We should see that our admin token is able to auth and get the response, while the user token 403s.
