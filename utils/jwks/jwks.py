@@ -6,13 +6,12 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-VAULT_ADDR = os.getenv("VAULT_ADDR") or "vault.vault.svc.cluster.local"
+VAULT_ADDR = os.getenv("VAULT_ADDR") or "http://vault.vault.svc.cluster.local:8200"
 VAULT_TOKEN = os.getenv("VAULT_TOKEN") or "root"
 VAULT_HEADERS = {'X-Vault-Token': VAULT_TOKEN, 'Content-Type': 'application/json'}
 
 @app.route('/.well-known/jwks.json')
 def get_vault_public_key(key_name="django"):
-    """Get public key from Vault transit engine"""
     url = f"{VAULT_ADDR}/v1/transit/keys/{key_name}"
     response = requests.get(url, headers=VAULT_HEADERS)
     data = response.json()['data']
@@ -33,5 +32,9 @@ def get_vault_public_key(key_name="django"):
     }
     return jwks
 
+@app.route('/health')
+def get_health():
+    return 'OK', 200
+    
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)

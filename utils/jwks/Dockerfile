@@ -8,3 +8,4 @@ COPY . .
 
 RUN uv sync
 
+CMD [ "uv", "run", "python", "/app/jwks.py"]
