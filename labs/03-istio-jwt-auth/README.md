@@ -1,0 +1,1 @@
+TODO https://istio.io/latest/docs/tasks/security/authorization/authz-jwt/
