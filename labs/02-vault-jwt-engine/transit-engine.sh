@@ -1,7 +1,5 @@
 #!/bin/bash -ex
 
-echo "Setting up Vault to issue JWTs for Django application (simplified)..."
-
 if [ -z "$VAULT_ADDR" ]; then
     export VAULT_ADDR=$(kubectl get svc -n vault vault -o jsonpath='http://{.status.loadBalancer.ingress[0].ip}:{.spec.ports[0].port}')
 fi

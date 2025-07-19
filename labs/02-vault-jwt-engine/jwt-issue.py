@@ -96,7 +96,7 @@ if __name__ == "__main__":
         "is_admin": True,
         "iat": int(time.time()), # issued at
         "exp": int(time.time()) + 3600, # expires after an hour
-        "iss": "vault-demo", # issued by
+        "iss": VAULT_ADDR, # issued by
         "aud": "my-demo-service" # audience / consumer
     }
     print(f"Payload: {json.dumps(payload, indent=2)}")
