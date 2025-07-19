@@ -60,7 +60,7 @@ def form_jwt(payload, key_name="django") -> str:
     signature_b64 = sign_jwt(signing_input)
     print(f"JWT Signature:\n  {signature_b64}")
     full_jwt = f"{header_b64}.{payload_b64}.{signature_b64}"
-    print(f"Fully formed JWT Token:\n  {jwt}")
+    print(f"Fully formed JWT Header:\n  {full_jwt}")
     return full_jwt
 
 def base64url_encode(data) -> str:
@@ -85,6 +85,7 @@ def validate_jwt(jwt_token, public_key_pem) -> bool:
         print("JWT signature validation PASSED!")
         return True
     else:
+        print("Unable to validate JWT")
         return False
 
 if __name__ == "__main__":
