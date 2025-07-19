@@ -6,14 +6,14 @@ In production there will be various improvements we'd need to make such as HA, h
 Let's start with a `kubectl get nodes` to verify we're using our local K3D cluster, and not about to deploy to prod-infra.
 
 To deploy simply run:
-```
+```bash
 kubectl deploy vault.yaml
 ```
 Then wait for the pod to be ready:
-```
+```bash
 kubectl rollout status -n vault deployment/vault
 ```
 And when it is ready we can get the URL to access it with:
-```
+```bash
 kubectl get svc -n vault vault -o jsonpath='http://{.status.loadBalancer.ingress[0].ip}:{.spec.ports[0].port}{"\n"}'
 ```

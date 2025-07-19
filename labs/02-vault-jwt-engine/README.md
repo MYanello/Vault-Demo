@@ -1,7 +1,7 @@
 # Lab 02: Vault JWT Engine
 
 Now we'll set up Vault's Transit engine to sign JWTs for us:
-```
+```bash
 ./transit-engine.sh
 ```
 
@@ -13,7 +13,7 @@ This script does the following:
 4. Validates our fully formed jwt header is valid based on the public key given by Vault
 
 To run through the above we run 
-```
+```bash
 python jwt-issue.py
 ```
 and press enter to step through the program.

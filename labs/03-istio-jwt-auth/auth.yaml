@@ -10,6 +10,7 @@ spec:
   jwtRules:
   - issuer: "vault-demo"
     jwksUri: "http://jwks.jwks.svc.cluster.local:8080/.well-known/jwks.json"
+    outputPayloadToHeader: "x-jwt-payload"
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
