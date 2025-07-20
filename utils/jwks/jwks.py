@@ -6,10 +6,10 @@ from flask import Flask
 
 app = Flask(__name__)
 
-VAULT_ADDR = (
-    os.getenv("VAULT_ADDR") or "http://vault.vault.svc.cluster.local:8200"
+VAULT_ADDR = os.getenv(
+    "VAULT_ADDR", "http://vault.vault.svc.cluster.local:8200"
 )
-VAULT_TOKEN = os.getenv("VAULT_TOKEN") or "root"
+VAULT_TOKEN = os.getenv("VAULT_TOKEN", "root")
 VAULT_HEADERS = {
     "X-Vault-Token": VAULT_TOKEN,
     "Content-Type": "application/json",
