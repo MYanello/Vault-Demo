@@ -21,7 +21,9 @@ def get_vault_public_key(key_name="django"):
     url = f"{VAULT_ADDR}/v1/transit/keys/{key_name}"
     response = requests.get(url, headers=VAULT_HEADERS, timeout=10)
     data = response.json()["data"]
-    pubkey_b64 = data["keys"]["1"]["public_key"]
+    pubkey_b64 = data["keys"]["1"][
+        "public_key"
+    ]  # should refacter to handle multiple keys
     decoded_bytes = base64.b64decode(pubkey_b64)
     enc_pubkey_b64 = (
         base64.urlsafe_b64encode(decoded_bytes).decode().rstrip("=")
