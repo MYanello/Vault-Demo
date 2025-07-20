@@ -4,7 +4,12 @@ version = "0.1.0"
 description = "Python script for demoing Vault"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = ["argparse>=1.4.0", "cryptography>=45.0.5", "requests>=2.32.4"]
+dependencies = [
+    "argparse>=1.4.0",
+    "cryptography>=45.0.5",
+    "logger>=1.4",
+    "requests>=2.32.4",
+]
 
 # stole this ruff config from a different project
 [tool.ruff]

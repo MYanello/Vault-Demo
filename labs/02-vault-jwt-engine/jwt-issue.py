@@ -19,6 +19,7 @@ VAULT_HEADERS = {
 def get_public_key(key_name="django") -> str:
     url = f"{VAULT_ADDR}/v1/transit/keys/{key_name}"
     response = requests.get(url, headers=VAULT_HEADERS, timeout=10)
+    print(f"Public key response {response.json()}")
     pubkey_b64 = response.json()["data"]["keys"]["1"]["public_key"]
     print(f"Public key for {key_name} JWTs:\n  {pubkey_b64}")
 
@@ -112,7 +113,8 @@ if __name__ == "__main__":
         "is_admin": True,
         "iat": int(time.time()),  # issued at
         "exp": int(time.time()) + 3600,  # expires after an hour
-        "iss": "vault-demo",  # issued by
+        "iss": "vault-demo",  # issued by, should typically be a url that we can
+        # access the jwks endpoint at, but for this demo we can use this
         "aud": "my-demo-service",  # audience / consumer
     }
     print(f"Payload: {json.dumps(payload, indent=2)}")

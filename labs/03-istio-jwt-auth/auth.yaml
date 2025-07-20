@@ -1,3 +1,4 @@
+# This simply tells Istio about our JWT and where to find the JWKS. "authn"
 apiVersion: security.istio.io/v1
 kind: RequestAuthentication
 metadata:
@@ -12,6 +13,7 @@ spec:
     jwksUri: "http://jwks.vault.svc.cluster.local:8080/.well-known/jwks.json"
     outputPayloadToHeader: "x-jwt-payload"
 ---
+# This is what actually tells Istio that things must pass the JWT validation to be passed. "authz"
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:

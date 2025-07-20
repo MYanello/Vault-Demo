@@ -103,12 +103,4 @@ spec:
         image: curlimages/curl
         command: ["/bin/sleep", "infinity"]
         imagePullPolicy: IfNotPresent
-        volumeMounts:
-        - mountPath: /etc/curl/tls
-          name: secret-volume
-      volumes:
-      - name: secret-volume
-        secret:
-          secretName: curl-secret
-          optional: true
 ---
