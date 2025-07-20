@@ -2,7 +2,7 @@
 
 Now we'll set up Vault's Transit engine to sign JWTs for us:
 ```bash
-./transit-engine.sh
+./labs/02-vault-jwt-engine/transit-engine.sh
 ```
 
 Then we have our Auth service which Vault trusts handled the validation of the payload. In this case we call it Django since users can log in to Django and form the payload there.
@@ -14,7 +14,7 @@ This script does the following:
 
 To run through the above we run 
 ```bash
-python jwt-issue.py
+python ./labs/02-vault-jwt-engine/jwt-issue.py
 ```
 and press enter to step through the program.
 

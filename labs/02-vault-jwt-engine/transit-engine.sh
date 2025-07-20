@@ -23,6 +23,3 @@ RSA_SIG=$(vault write -field=signature transit/sign/django input="$DATA_B64")
 vault write transit/verify/django \
     input="$DATA_B64" \
     signature="$RSA_SIG" && echo "RSA signature test succeed" || echo "RSA signature test failed"
-    
-# Get our public key
-export PUBLIC_KEY=$(vault read -format=json transit/export/signing-key/django/latest | jq -r '.data.keys["1"]')

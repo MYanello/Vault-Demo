@@ -1,11 +1,4 @@
 ---
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: jwks
-  labels:
-    istio-injection: enabled
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -52,7 +45,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jwks
-  namespace: jwks
   labels:
     app: jwks
 spec:

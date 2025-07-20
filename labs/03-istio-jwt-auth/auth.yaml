@@ -9,7 +9,7 @@ spec:
       app: httpbin
   jwtRules:
   - issuer: "vault-demo"
-    jwksUri: "http://jwks.jwks.svc.cluster.local:8080/.well-known/jwks.json"
+    jwksUri: "http://jwks.vault.svc.cluster.local:8080/.well-known/jwks.json"
     outputPayloadToHeader: "x-jwt-payload"
 ---
 apiVersion: security.istio.io/v1

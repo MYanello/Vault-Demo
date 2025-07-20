@@ -1,3 +1,4 @@
+import base64
 import os
 
 import requests
@@ -21,7 +22,10 @@ def get_vault_public_key(key_name="django"):
     response = requests.get(url, headers=VAULT_HEADERS, timeout=10)
     data = response.json()["data"]
     pubkey_b64 = data["keys"]["1"]["public_key"]
-
+    decoded_bytes = base64.b64decode(pubkey_b64)
+    enc_pubkey_b64 = (
+        base64.urlsafe_b64encode(decoded_bytes).decode().rstrip("=")
+    )
     # Convert to JWKS format
     jwks = {
         "keys": [
@@ -30,9 +34,7 @@ def get_vault_public_key(key_name="django"):
                 "crv": "Ed25519",
                 "use": "sig",
                 "kid": f"{key_name}-1",
-                "x": pubkey_b64.replace(
-                    "=", ""
-                ),  # Remove padding for JWK format
+                "x": enc_pubkey_b64,
                 "alg": "EdDSA",
             }
         ]

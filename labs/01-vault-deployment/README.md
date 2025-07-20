@@ -7,7 +7,7 @@ Let's start with a `kubectl get nodes` to verify we're using our local K3D clust
 
 To deploy simply run:
 ```bash
-kubectl deploy vault.yaml
+kubectl apply -f ./labs/01-vault-deployment/vault.yaml
 ```
 Then wait for the pod to be ready:
 ```bash
