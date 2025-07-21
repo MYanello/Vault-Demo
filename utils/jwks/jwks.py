@@ -19,6 +19,7 @@ VAULT_HEADERS = {
 @app.route("/.well-known/jwks.json")
 def get_vault_public_key(key_name="django"):
     url = f"{VAULT_ADDR}/v1/transit/keys/{key_name}"
+    # this should be cached
     response = requests.get(url, headers=VAULT_HEADERS, timeout=10)
     data = response.json()["data"]
     pubkey_b64 = data["keys"]["1"][
