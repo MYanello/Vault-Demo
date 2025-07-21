@@ -8,7 +8,8 @@ if [ -z "$VAULT_TOKEN" ]; then
 fi
 ```
 
-First let's set up a service to provide the JWKs formatted keys and verify it's working. If we use the Vault OIDC Engine instead of Transit Engine this step isn't necessary.
+First let's set up a service to provide the JWKs formatted keys and verify it's working. If we use the Vault OIDC Engine instead of Transit Engine this step isn't necessary.  
+We could also directly provide the public key to Istio's AuthenticationRequest object but the maintainability is called into question there.
 ```bash
 kubectl apply -f ./labs/03-istio-jwt-auth/jwks.yaml -n vault
 ```
@@ -68,4 +69,6 @@ Finally, what if we have a signed JWT but it's not signed by us? Let's use a JWT
 export BAD_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
 kubectl exec "$(kubectl get pod -l app=curl -n client -o jsonpath={.items..metadata.name})" -c curl -n client -- curl "http://httpbin.backend:8000/headers" -sS  -H "Authorization: Bearer $BAD_TOKEN"
 ```
-We see that the Issuer is not configured. If we were to decide "Hey we trust these guys at jwt.io, let's accept their tokens" we could tell Istio about their JWKS endpoint or add their public key to our own JWKS endpoint. Of course, we shouldn't do that because jwt.io does no validation at all of who is forming the payload, whereas on our frontend we can be sure you've logged into a valid account before crafting your JWT payload to sign and use for requests.
+We see that the Issuer is not configured. If we were to decide "Hey we trust these guys at jwt.io, let's accept their tokens" we could tell Istio about their JWKS endpoint or add their public key to our own JWKS endpoint. Of course, we shouldn't do that because jwt.io does no validation at all of who is forming the payload, whereas on our frontend we can be sure you've logged into a valid account before crafting your JWT payload to sign and use for requests.  
+
+Another cool benefit of this approach is that since the actual service doesn't do any auth, testing becomes very simple because we can directly form the header used by the test to access the service without worrying about deploying a Vault instance with a valid, Istio approved signature.

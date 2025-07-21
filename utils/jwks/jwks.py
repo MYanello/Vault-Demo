@@ -17,6 +17,8 @@ VAULT_HEADERS = {
 
 
 @app.route("/.well-known/jwks.json")
+# ideally this is a route on the url of the token issuer
+#  so that autodiscovery works
 def get_vault_public_key(key_name="django"):
     url = f"{VAULT_ADDR}/v1/transit/keys/{key_name}"
     # this should be cached
