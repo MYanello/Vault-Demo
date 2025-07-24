@@ -1,11 +1,7 @@
 #!/bin/bash -ex
 
-if [ -z "$VAULT_ADDR" ]; then
-    export VAULT_ADDR=$(kubectl get svc -n vault vault -o jsonpath='http://{.status.loadBalancer.ingress[0].ip}:{.spec.ports[0].port}')
-fi
-if [ -z "$VAULT_TOKEN" ]; then
-    export VAULT_TOKEN=root
-fi
+export VAULT_ADDR=$(kubectl get svc -n vault vault -o jsonpath='http://{.status.loadBalancer.ingress[0].ip}:{.spec.ports[0].port}')
+export VAULT_TOKEN=root
 
 # Enable Vault transit engine
 vault secrets enable transit

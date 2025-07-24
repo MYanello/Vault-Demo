@@ -6,7 +6,7 @@ Now we'll set up Vault's Transit engine to sign JWTs for us:
 ```
 The above script will also do a basic request to sign some data, and then ask Vault to verify the signature.
 
-Then we have our Auth service which Vault trusts handled the validation of the payload. In this case we call it Django since users can log in to Django and form the payload there.
+Then we have our Auth service which Vault trusts to handle the validation of the payload. In this case we call it Django since users can log in to Django and form the payload there.
 This script does the following:
 1. Forms a JWT signing input from the header and payload
 2. Requests our Vault instance to sign it using the *Django* private key
